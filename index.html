@@ -411,7 +411,7 @@ function renderResultados(){
         <span class="nivel ${nivel.clase}">${nivel.texto}</span>
       </div>
       <ul class="tips">${cat.tips.map(t=>`<li>${t}</li>`).join('')}</ul>
-      <a class="btn chico" style="background:${cat.color}" href="${PDFS_CATEGORIA[cat.id]}" download>descargar plantilla — ${cat.label} ⬇</a>
+      <a class="btn chico" style="background:${cat.color}" href="${PDFS_CATEGORIA[cat.id]}" download>descargar guía — ${cat.label} ⬇</a>
     `;
     wrap.appendChild(div);
   });
