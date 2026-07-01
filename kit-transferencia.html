@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transformá el Entorno Laboral — Kit de Transferencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --violeta:#8c2e8a;
+    --naranja:#ed7d21;
+    --verde:#3bab54;
+    --gris:#cccccc;
+    --gris-claro:#f4f4f4;
+    --gris-oscuro:#666666;
+    --tinta:#242424;
+    --radio:26px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Atkinson Hyperlegible', Arial, sans-serif;
+    color:var(--tinta);
+    background:#ffffff;
+    line-height:1.5;
+  }
+  #app{max-width:880px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* ---------- Header ---------- */
+  header{display:flex;align-items:center;gap:16px;margin-bottom:28px;}
+  .mark{width:56px;height:56px;flex-shrink:0;}
+  header h1{font-size:1.35rem;margin:0;line-height:1.2;font-weight:400;}
+  header h1 b{color:var(--gris-oscuro);}
+  header p{margin:2px 0 0;font-size:.9rem;color:#666;}
+
+  /* ---------- Progress ---------- */
+  .progress-track{height:10px;border-radius:10px;background:var(--gris-claro);overflow:hidden;margin-bottom:28px;display:none;}
+  .progress-fill{height:100%;background:var(--gris-oscuro);border-radius:10px;transition:width .3s ease;}
+
+  /* ---------- Screens ---------- */
+  .screen{display:none;}
+  .screen.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+  /* ---------- Cards / buttons ---------- */
+  .card{
+    background:var(--gris-claro);
+    border-radius:var(--radio);
+    padding:24px;
+    margin-bottom:16px;
+  }
+  .btn{
+    font-family:inherit;
+    font-weight:700;
+    font-size:1rem;
+    border:none;
+    border-radius:999px;
+    padding:14px 26px;
+    cursor:pointer;
+    color:#fff;
+    background:var(--gris-oscuro);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn:focus-visible{outline:3px solid var(--tinta);outline-offset:2px;}
+  .btn.secundario{background:transparent;color:var(--gris-oscuro);border:2px solid var(--gris-oscuro);}
+  .btn.chico{padding:10px 18px;font-size:.9rem;}
+  .btn[disabled]{opacity:.4;cursor:not-allowed;}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;}
+
+  /* ---------- Manual screen ---------- */
+  .principios{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:20px 0;}
+  .principio{background:#fff;border:2px solid var(--gris-claro);border-radius:18px;padding:16px 18px;}
+  .principio .num{font-weight:700;color:#999999;font-size:.85rem;}
+  .principio h3{margin:6px 0 4px;font-size:1rem;}
+  .principio p{margin:0;font-size:.88rem;color:#555;}
+
+  /* ---------- Quiz ---------- */
+  .cat-badge{
+    display:inline-block;padding:6px 16px;border-radius:999px;color:#fff;
+    font-weight:700;font-size:.85rem;margin-bottom:14px;
+  }
+  .pregunta{background:#fff;border-radius:18px;padding:18px 20px;margin-bottom:14px;border:2px solid var(--gris-claro);}
+  .pregunta p{margin:0 0 12px;font-weight:700;font-size:1.02rem;}
+  .toggle{display:flex;gap:10px;}
+  .toggle button{
+    flex:1;
+    padding:12px;
+    border-radius:14px;
+    border:2px solid var(--gris);
+    background:#fff;
+    font-family:inherit;
+    font-weight:700;
+    cursor:pointer;
+    font-size:.95rem;
+  }
+  .toggle button.sel-si{border-color:var(--verde);background:var(--verde);color:#fff;}
+  .toggle button.sel-no{border-color:rgb(196, 22, 22);background:rgb(196, 22, 22);color:#fff;}
+
+  /* ---------- Results ---------- */
+  .resumen-cat{border-radius:20px;padding:20px 22px;margin-bottom:16px;border:2px solid var(--gris-claro);}
+  .resumen-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+  .resumen-top h3{margin:0;font-size:1.05rem;}
+  .nivel{font-weight:700;font-size:.82rem;padding:5px 14px;border-radius:999px;color:#fff;}
+  .nivel-alta{background:rgb(196, 22, 22);}
+  .nivel-atencion{background:#d9a400;}
+  .nivel-ok{background:var(--verde);}
+  .tips{margin:12px 0 6px;padding-left:20px;font-size:.92rem;color:#444;}
+  .tips li{margin-bottom:4px;}
+
+  footer{margin-top:40px;font-size:.78rem;color:#999;text-align:center;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <svg id="Layer_1" data-name="Layer 1" class="mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 770.02 816.31">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #3aab53;
+      }
+
+      .cls-2 {
+        fill: #ee7e22;
+      }
+
+      .cls-3 {
+        fill: #8d2f89;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M326.69,298.54c-10.03,9.34-21.2,25.67-17.8,39.51l31.23,74.64c14.38,34.36-3.04,73.47-38.49,84.8-3.21,24.81-20.91,45.46-45.34,52.3-4,19.44-16.85,35.92-34.93,44.29-18.53,8.79-39.87,8.01-57.75-1.96l24.33-24.16c6.52,1.41,12.47.65,18.21-1.61,16.07-6.32,24.02-24.31,17.71-40.46l-20.74-49.73,25.74-20.16,25.39,60.83c14.07-7.68,20.19-24.48,14.13-39.02l-23.16-55.59,17-41.14,35.12,84.17c13.72-7.51,19.9-23.75,14.44-38.44l-34.39-82.29,49.3-45.98Z"/>
+  <path class="cls-1" d="M451.8,492.12l-2.07,3.87-54.23,132.25c-3.8,9.27-5.51,19.07-7.4,28.76-1.7,8.72-1.24,17.18-1.34,25.98-.07,6.54.76,12.5,3.41,18.51,2.66,6.02,5.67,11.7,9.68,17.01l16.29,21.59,16.92,23.2c4.82,6.61,8.22,13.69,11.32,21.27,3.93,9.61,6.11,19.5,6.23,30.16h-31.49c-.16-6.76-1.65-12.73-4.09-18.73-2.85-6.5-5.99-12.58-10.23-18.28l-14.46-19.42-16.98-22.69c-5.27-7.04-9.15-14.6-12.56-22.66-4.18-9.85-5.55-19.75-5.61-30.41-.08-13.86.37-27.2,3.77-40.69,2.13-8.46,3.79-16.9,7.14-25.06l53.77-131.05c4.11-10.02,10.24-18.76,18.63-25.61"/>
+  <path class="cls-3" d="M538.57,249.35c27.78-15.44,63.18-7.23,81.52,19.19,32.75-12.24,68.32,4.27,81.13,37.13l23.1,52.22,20.66,47.55c11.78,27.1,23.82,69.03,24.71,98.25l.24,7.86.09,9.14-.32,7.65c-.76,18.08-4.17,35.62-9.31,52.99-9.74,32.91-26.45,64.33-45.33,92.92l-33.92,46.34-38.02,44.39-.05,49.47v1.58c0,.29-.89.27-1.32.25h-28.53c-.31.04-1.61.09-1.62-.25l-.04-1.6v-61.62s41.79-47.96,41.79-47.96l33.26-44.75c18.83-28.04,35.04-58.03,44.42-90.58,12.81-44.46,8.51-85.04-6.31-128.27l-15.66-40.04-18.72-41.94-18.71-42.74c-6.62-15.11-21.32-23.48-37.04-19.58l-.84.21c-.17.04.08.71.2,1.04l66.82,160.38-29.1,12.14-74.58-179.01c-5.75-12.91-19.35-20.38-33.3-18.21l-1.18.25"/>
+  <path class="cls-2" d="M438.49,460.12l-30.52-72.83c-14.15-33.76,2.19-72.22,36.53-84.37.34-23.8,14.18-44.97,35.54-55.49,18.41-9.07,40.32-8.48,58.54,1.92,3.41,2.06,7.36,4.84,11.38,8.57,6.03,5.6,10.06,11.34,12.68,15.81-.02,0-.04.01-.05.03-.14.15.35.83.47,1.07l1.95,4.09,83.91,201.31-29.1,12.14-83.95-201.41c-6.47-14.29-22.86-21.88-37.89-16.8-11.99,4.05-19.99,13.68-21.78,25.82,20.88,3.41,38.94,17.41,47.36,37.23l69.29,166.29-29.1,12.13-68.63-164.72c-6.14-16.07-23.68-24.19-39.88-18.43-16.27,5.78-25.66,24.27-18.83,40.66l61.09,146.6c.23,16.56-2.22,32.7-6.97,48.43l-9.8,27.34-25.55,57.46-28.8-12.82,25.36-57.06,8.39-23.29c3.41-11.08,5.35-22.02,5.83-33.77-4.72-11.31-9.44-22.61-14.16-33.92"/>
+  <path class="cls-3" d="M163.61,592.11l-9.52,4.14c-31.65,11.13-65.13-3.9-79.03-34.1l-26.91-58.43-20.51-49.05C14.86,421.29,3.04,382.5.85,346.92l-.29-4.65-.14-9.58c0-.26-.28-1.24-.42-1.01l.11-8.9c.53-3.26.22-6.72.45-10.23l.3-4.58c2.45-37.34,15.83-75.34,33.34-108.36,29.72-56.04,74.88-107.94,119.05-153.41l.02-38.63h31.53s-.02,51.58-.02,51.58c-35.19,35.53-69.58,73.36-97.73,114.32-19.35,28.15-36.08,58.49-46.06,91.24-17.52,57.49-8.72,110.09,11.22,165.53,6.22,17.3,12.76,34.13,20.46,50.86l30.28,65.86c6.88,18.12,26.39,26.63,44.16,18.08,14.23-6.76,21.33-24.14,15.19-39.1l-23.98-58.43,39.81,13.96,12.69,30.79c7.77,18.09,6.73,38.37-2.87,55.68-2.69,4.32-6.65,9.71-12.34,15.03-4.24,3.97-8.41,6.94-11.98,9.13Z"/>
+  <path class="cls-3" d="M160.59,294.2c-4.87,6.36-9.1,12.61-13.38,19.3-8,12.51-11.84,26.9-11.61,41.86l-19.9,52.02c-.8-.78-1.3-1.54-1.7-2.55-15.27-38.93-14.01-79.35,10.38-114.15,11.74-16.75,26.79-39.36,41.56-52.5,3.84-3.41,7.91-6.18,12.73-7.8,6.17-2.08,12.41-1.16,17.3,2.02"/>
+  <path class="cls-2" d="M115.71,407.38c-3.89,22.54,4.69,45.65,22.6,60.14,4.29,3.09,10.63,6.98,18.97,9.89,8.26,2.89,15.59,3.81,20.84,4.07,3.51-.04,7.84-.38,12.69-1.41,4.18-.89,8.3-2.2,12.3-3.93,3.95-1.59,9.33-4.24,14.87-8.69,5.01-4.02,8.52-8.2,10.87-11.47,2.18-2.88,4.43-6.33,6.46-10.38.69-1.37,1.33-2.77,1.92-4.2l7.98-19.19,17-41.14,15.17-36.56,49.3-45.98c33.13-30.85,54.9-68.15,51.19-114.87-1.7-21.45-7.2-40.93-14.39-61.41l45.65-110.22-28.88-12.04h-.42l-50.06,121.26c13.11,36.84,26.22,74.96,7.88,112.11-2.81,5.69-5.44,11.44-9.68,16.19l-23.74,26.58c-6.88,7.7-13.69,15.04-21.95,21.28l-28.44,21.51-45.38,109.69c-5.51,13.33-18.42,22.19-32.95,21.26-10.13-.65-19.05-6.54-24.04-14.32-5.99-9.34-6.66-20.1-2.58-29.95l32.49-78.46,15.99-40.67c2.87-7.3,5.08-14.38,7.11-21.91,1.93-7.17,1.96-14.49-.34-21.44-1.55-4.66-4.47-8.35-8.16-10.75l-35.38,61.81-24.99,61.16-6.24,13.09c-5.72,12.01-10.19,24.58-13.32,37.51l-.34,1.42Z"/>
+</svg>
+    <div>
+      <h1>transformá <b>el entorno</b> laboral</h1>
+      <p>kit de autodiagnóstico y transferencia para empresas e instituciones</p>
+    </div>
+  </header>
+
+  <div class="progress-track" id="progressTrack"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+  <!-- ===================== SCREEN 1: MANUAL ===================== -->
+  <section class="screen active" id="screen-manual">
+    <div class="card">
+      <p style="margin-top:0">este kit te ayuda a identificar las barreras de tu entorno laboral y te devuelve consejos y plantillas concretas para transformarlo, pensado para incluir a personas con discapacidad cognitiva.</p>
+      <p style="margin-bottom:0">antes de empezar, estos son los <b>7 principios del diseño universal</b> en los que se basa el diagnóstico:</p>
+    </div>
+
+    <div class="principios" id="principiosGrid"></div>
+
+    <div class="btn-row">
+      <button class="btn" id="btnEmpezar">empezar diagnóstico →</button>
+    </div>
+  </section>
+
+  <!-- ===================== SCREEN 2: QUIZ ===================== -->
+  <section class="screen" id="screen-quiz">
+    <div id="catBadgeWrap"></div>
+    <h2 id="catTitulo" style="margin:0 0 4px"></h2>
+    <p id="catSubtitulo" style="margin:0 0 20px;color:#666;font-size:.92rem"></p>
+    <div id="preguntasWrap"></div>
+    <div class="btn-row">
+      <button class="btn secundario" id="btnAnterior">← anterior</button>
+      <button class="btn" id="btnSiguiente" disabled>siguiente →</button>
+    </div>
+  </section>
+
+  <!-- ===================== SCREEN 3: RESULTADOS ===================== -->
+  <section class="screen" id="screen-resultados">
+    <div class="card">
+      <p style="margin:0 0 14px"><b>diagnóstico listo.</b> abajo están las barreras detectadas en tu entorno, con consejos y una plantilla descargable para cada una.</p>
+      <a class="btn" href="diagnostico-completo.pdf" download>descargar diagnóstico completo (pdf) ⬇</a>
+    </div>
+    <div id="resultadosWrap"></div>
+    <div class="btn-row">
+      <button class="btn secundario" id="btnReiniciar">↺ volver a hacer el diagnóstico</button>
+    </div>
+  </section>
+
+  <footer>trabajo final de carrera · licenciatura en diseño de la comunicación visual · fadu unl</footer>
+</div>
+
+<script>
+/* =========================================================
+   CONTENIDO
+========================================================= */
+const PRINCIPIOS = [
+  {n:"01", t:"uso equitativo", d:"el diseño sirve a personas con capacidades diversas, sin estigmatizar a nadie."},
+  {n:"02", t:"flexibilidad de uso", d:"se adapta a distintos ritmos, preferencias y formas de hacer las cosas."},
+  {n:"03", t:"uso simple e intuitivo", d:"se entiende sin necesidad de experiencia previa, conocimientos o concentración."},
+  {n:"04", t:"información perceptible", d:"la información llega por más de un canal: visual, verbal y táctil."},
+  {n:"05", t:"tolerancia al error", d:"minimiza las consecuencias de acciones accidentales o involuntarias."},
+  {n:"06", t:"bajo esfuerzo físico", d:"puede usarse de forma eficiente y con la mínima fatiga posible."},
+  {n:"07", t:"tamaño y espacio de uso", d:"el espacio permite el acceso y el uso, sin importar tamaño corporal o movilidad."},
+];
+
+const CATEGORIAS = [
+  {
+    id:"tipografia", label:"tipografía y lectura fácil",color:"var(--gris-oscuro)", hex:"#666666",
+    subt:"cómo se lee y se redacta la información escrita",
+    preguntas:[
+      "¿los textos usan una tipografía de palo seco, sin adornos?",
+      "¿los textos están mayormente en minúscula, evitando bloques en mayúscula sostenida?",
+      "¿las frases son cortas, directas y evitan siglas, tecnicismos o conectores innecesarios?"
+    ],
+    tips:[
+      "usá una tipografía sans-serif, nunca condensada ni con muchos adornos.",
+      "priorizá la caja baja (minúsculas): se reconoce más rápido que el bloque en mayúsculas.",
+      "escribí en frases cortas, con verbos en infinitivo, para lograr una lectura fácil."
+    ]
+  },
+  {
+    id:"zonificacion", label:"zonificación y elecciones cromáticas", color:"var(--gris-oscuro)", hex:"#666666",
+    subt:"cómo se organiza el espacio y se usa el color para orientar",
+    preguntas:[
+      "¿usás como máximo 6 colores distintos para identificar zonas o funciones?",
+      "¿el contraste entre el fondo y las señales o textos es alto y se distingue con claridad?",
+      "¿existe una zonificación clara del espacio, con guías visuales que orienten el recorrido?",
+
+    ],
+    tips:[
+      "elegí una paleta chica (hasta 6 colores) que se encuentren distantes en el círculo cromático y usalos siempre con el mismo significado, en mobiliario, piso y señalética.",
+      "verificá que haya un buen contraste entre el color del fondo y del texto",
+      "zonificá el espacio usando los colores elegidos. Podés colocar líneas guía en el piso y pintar los elementos de cada zona del color correspondiente"
+    ]
+  },
+  {
+    id:"pictogramas", label:"diseño de pictogramas", color:"var(--gris-oscuro)", hex:"#666666",
+    subt:"cómo se construye un sistema de signos coherente",
+    preguntas:[
+      "¿los pictogramas usados tienen un estilo consistente entre sí (mismo grosor, misma retícula)?",
+      "¿cada pictograma representa una acción o lugar mediante una figura específica, sin escenas complicadas?",
+      "¿los pictogramas usados son lineales y geométricos?"
+    ],
+    tips:[
+      "diseñá los pictogramas sobre una misma retícula y los mismos ángulos, para que se vean como un sistema.",
+      "evitá pictogramas que representen escenas completas, optá por figuras más específicas.",
+      "utilizá pictogramas lineales y geométricos. las formas orgánicas pueden generar confusión."
+    ]
+  },
+  {
+    id:"imagenes", label:"utilización de imágenes", color:"var(--gris-oscuro)", hex:"#666666",
+    subt:"cómo se usa la fotografía para aportar literalidad",
+    preguntas:[
+      "¿las fotografías se usan como apoyo de una acción o proceso, y no como decoración?",
+      "¿las imágenes están tomadas con un criterio consistente (ángulo, fondo, luz) en toda la señalética?",
+      "¿las instrucciones combinan texto, pictograma y fotografía, en lugar de un solo modo?"
+    ],
+    tips:[
+      "usá la imagen para aportar literalidad a una acción concreta, no como recurso estético.",
+      "fotografiá desde un ángulo cenital y sobre fondo neutro, para evitar distracciones.",
+      "combiná siempre texto + pictograma + fotografía: la redundancia entre modos ayuda a la comprensión."
+    ]
+  },
+];
+
+/* =========================================================
+   ESTADO
+========================================================= */
+let catIndex = 0;
+const respuestas = {}; // { catId: [true/false, true/false, true/false] }
+CATEGORIAS.forEach(c => respuestas[c.id] = new Array(c.preguntas.length).fill(null));
+
+/* =========================================================
+   RENDER: MANUAL
+========================================================= */
+const principiosGrid = document.getElementById('principiosGrid');
+PRINCIPIOS.forEach(p=>{
+  const div = document.createElement('div');
+  div.className='principio';
+  div.innerHTML = `<div class="num">${p.n}</div><h3>${p.t}</h3><p>${p.d}</p>`;
+  principiosGrid.appendChild(div);
+});
+
+/* =========================================================
+   NAVEGACIÓN DE PANTALLAS
+========================================================= */
+function mostrarPantalla(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('progressTrack').style.display = (id==='screen-quiz') ? 'block' : 'none';
+}
+
+document.getElementById('btnEmpezar').addEventListener('click', ()=>{
+  catIndex = 0;
+  renderCategoria();
+  mostrarPantalla('screen-quiz');
+});
+
+/* =========================================================
+   RENDER: QUIZ
+========================================================= */
+function renderCategoria(){
+  const cat = CATEGORIAS[catIndex];
+  document.getElementById('catBadgeWrap').innerHTML =
+    `<span class="cat-badge" style="background:${cat.color}">categoría ${catIndex+1} / ${CATEGORIAS.length}</span>`;
+  document.getElementById('catTitulo').textContent = cat.label;
+  document.getElementById('catSubtitulo').textContent = cat.subt;
+
+  const wrap = document.getElementById('preguntasWrap');
+  wrap.innerHTML = '';
+  cat.preguntas.forEach((preg, i)=>{
+    const div = document.createElement('div');
+    div.className='pregunta';
+    div.innerHTML = `
+      <p>${preg}</p>
+      <div class="toggle">
+        <button data-cat="${cat.id}" data-i="${i}" data-val="si">sí</button>
+        <button data-cat="${cat.id}" data-i="${i}" data-val="no">no</button>
+      </div>`;
+    wrap.appendChild(div);
+  });
+
+  // pintar selección previa
+  cat.preguntas.forEach((_,i)=>{
+    const val = respuestas[cat.id][i];
+    if(val!==null){
+      const sel = val ? 'si' : 'no';
+      const btn = wrap.querySelector(`button[data-i="${i}"][data-val="${sel}"]`);
+      btn.classList.add(sel==='si' ? 'sel-si':'sel-no');
+    }
+  });
+
+  wrap.querySelectorAll('button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = +btn.dataset.i;
+      const val = btn.dataset.val === 'si';
+      respuestas[cat.id][i] = val;
+      const paar = wrap.querySelectorAll(`button[data-i="${i}"]`);
+      paar.forEach(b=>{b.classList.remove('sel-si','sel-no');});
+      btn.classList.add(val ? 'sel-si':'sel-no');
+      actualizarBotonSiguiente();
+    });
+  });
+
+  document.getElementById('btnAnterior').disabled = (catIndex===0);
+  actualizarBotonSiguiente();
+
+  const pct = Math.round(((catIndex)/CATEGORIAS.length)*100);
+  document.getElementById('progressFill').style.width = pct+'%';
+}
+
+function categoriaCompleta(cat){
+  return respuestas[cat.id].every(v=>v!==null);
+}
+
+function actualizarBotonSiguiente(){
+  const cat = CATEGORIAS[catIndex];
+  const btn = document.getElementById('btnSiguiente');
+  btn.disabled = !categoriaCompleta(cat);
+  btn.textContent = (catIndex === CATEGORIAS.length-1) ? 'ver diagnóstico →' : 'siguiente →';
+}
+
+document.getElementById('btnAnterior').addEventListener('click', ()=>{
+  if(catIndex>0){ catIndex--; renderCategoria(); }
+});
+
+document.getElementById('btnSiguiente').addEventListener('click', ()=>{
+  if(catIndex < CATEGORIAS.length-1){
+    catIndex++;
+    renderCategoria();
+  } else {
+    document.getElementById('progressFill').style.width='100%';
+    renderResultados();
+    mostrarPantalla('screen-resultados');
+  }
+});
+
+/* =========================================================
+   DIAGNÓSTICO / NIVELES
+========================================================= */
+function calcularNivel(catId){
+  const sis = respuestas[catId].filter(v=>v===true).length;
+  if(sis <= 1) return {clase:'nivel-alta', texto:'barrera alta'};
+  if(sis === 2) return {clase:'nivel-atencion', texto:'atención'};
+  return {clase:'nivel-ok', texto:'resuelto'};
+}
+
+/* =========================================================
+   RENDER: RESULTADOS
+========================================================= */
+const PDFS_CATEGORIA = {
+  tipografia: 'transforma-el-entorno-laboral-guia-tipografia.pdf',
+  zonificacion: 'transforma-el-entorno-laboral-guia-zonificacion.pdf',
+  pictogramas: 'transforma-el-entorno-laboral-guia-pictogramas.pdf',
+  imagenes: 'transforma-el-entorno-laboral-guia-imagenes.pdf',
+};
+
+function renderResultados(){
+  const wrap = document.getElementById('resultadosWrap');
+  wrap.innerHTML = '';
+  CATEGORIAS.forEach(cat=>{
+    const nivel = calcularNivel(cat.id);
+    const div = document.createElement('div');
+    div.className = 'resumen-cat';
+    div.style.borderColor = cat.color === 'var(--violeta)' ? '#f0e2ef' : '#f0f0f0';
+    div.innerHTML = `
+      <div class="resumen-top">
+        <h3 style="color:${cat.color}">${cat.label}</h3>
+        <span class="nivel ${nivel.clase}">${nivel.texto}</span>
+      </div>
+      <ul class="tips">${cat.tips.map(t=>`<li>${t}</li>`).join('')}</ul>
+      <a class="btn chico" style="background:${cat.color}" href="${PDFS_CATEGORIA[cat.id]}" download>descargar plantilla — ${cat.label} ⬇</a>
+    `;
+    wrap.appendChild(div);
+  });
+}
+document.getElementById('btnReiniciar').addEventListener('click', ()=>{
+  CATEGORIAS.forEach(c => respuestas[c.id] = new Array(c.preguntas.length).fill(null));
+  catIndex = 0;
+  mostrarPantalla('screen-manual');
+});
+
+</script>
+</body>
+</html>
