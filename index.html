@@ -106,7 +106,7 @@
   .resumen-top h3{margin:0;font-size:1.05rem;}
   .nivel{font-weight:700;font-size:.82rem;padding:5px 14px;border-radius:999px;color:#fff;}
   .nivel-alta{background:rgb(196, 22, 22);}
-  .nivel-atencion{background:#d9a400;}
+  .nivel-medio{background:#d9a400;}
   .nivel-ok{background:var(--verde);}
   .tips{margin:12px 0 6px;padding-left:20px;font-size:.92rem;color:#444;}
   .tips li{margin-bottom:4px;}
@@ -179,7 +179,7 @@
   <!-- ===================== SCREEN 3: RESULTADOS ===================== -->
   <section class="screen" id="screen-resultados">
     <div class="card">
-      <p style="margin:0 0 14px"><b>Diagnóstico listo.</b> Abajo están las barreras detectadas en tu entorno, con consejos y una guía descargable para cada una.</p>
+      <p style="margin:0 0 14px"><b>Diagnóstico listo.</b> Abajo están las barreras detectadas en tu entorno, con consejos y una guía descargable para cada una. Recomendamos descargar las guías de aquellos aspectos en los que tengas barreras altas o medias</p>
       <a class="btn" href="transforma-el-entorno-laboral-guia-completa.pdf" download>descargar guía completa (pdf) ⬇</a>
     </div>
     <div id="resultadosWrap"></div>
@@ -383,7 +383,7 @@ document.getElementById('btnSiguiente').addEventListener('click', ()=>{
 function calcularNivel(catId){
   const sis = respuestas[catId].filter(v=>v===true).length;
   if(sis <= 1) return {clase:'nivel-alta', texto:'barrera alta'};
-  if(sis === 2) return {clase:'nivel-atencion', texto:'atención'};
+  if(sis === 2) return {clase:'nivel-medio', texto:'barrera media'};
   return {clase:'nivel-ok', texto:'resuelto'};
 }
 
